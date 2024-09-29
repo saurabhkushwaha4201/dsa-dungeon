@@ -1,24 +1,35 @@
 class Solution {
 public:
     bool isValid(string s) {
-        stack<char>s1;
-        for(auto ch : s) {
-            if(ch == '(' || ch == '{' || ch == '[') {
-                s1.push(ch);
-            } else if(ch == ')' || ch == '}' || ch == ']') {
-                if(s1.empty()) return false; // More closing than opening
-                char top = s1.top();
-                if((ch == ')' && top == '(') ||
-                   (ch == '}' && top == '{') ||
-                   (ch == ']' && top == '[')) {
-                    s1.pop();
-                } else {
-                    return false; // Mismatched opening and closing
-                }
+    // Create a stack to keep track of opening brackets
+    stack<char> st;
+
+    // Iterate over each character in the string
+    for (int i = 0; i < s.length(); i++) {
+        // If the character is an opening bracket, push it onto the stack
+        if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
+            st.push(s[i]);
+        } 
+        // If the character is a closing bracket
+        else if (s[i] == ')' || s[i] == ']' || s[i] == '}') {
+            // Check if the stack is empty (no corresponding opening bracket)
+            if (st.empty())
+                return false; // Invalid because there's no matching opening bracket
+            
+            // Check if the top of the stack matches the closing bracket
+            if ((s[i] == ')' && st.top() == '(') ||
+                (s[i] == ']' && st.top() == '[') ||
+                (s[i] == '}' && st.top() == '{')) {
+                st.pop(); // If it matches, pop the opening bracket from the stack
+            } else {
+                return false; // Invalid because the brackets do not match
             }
         }
-        
-        return s1.empty(); // Stack should be empty for valid expression
-    
+        else
+        return false;
     }
+    // After processing all characters, check if the stack is empty
+    return st.empty(); // If empty, all brackets matched; otherwise, invalid
+}
+
 };
