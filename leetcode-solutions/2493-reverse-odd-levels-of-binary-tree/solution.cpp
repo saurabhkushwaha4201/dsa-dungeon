@@ -11,33 +11,38 @@
  */
 class Solution {
 public:
-    // Helper function to swap values of nodes at odd levels
-    void helper(TreeNode* left, TreeNode* right, int level)
+    TreeNode* reverseOddLevels(TreeNode* root) 
     {
-        // If any of the nodes is null, return (base case)
-        if (left == nullptr || right == nullptr)
-            return;
-
-        // Swap the values of nodes at the current level if the level is odd
-        if (level % 2 == 1) // Odd level, swap values
+        queue<TreeNode*>q;
+        q.push(root);
+        int level = 0;
+        while(!q.empty())
         {
-            swap(left->val, right->val);
+            int size=q.size();
+            vector<TreeNode*>levelElements;
+            for(int i=0;i<size;i++)
+            {
+                TreeNode*temp = q.front();
+                q.pop();
+                if(temp->left)
+                q.push(temp->left);
+                if(temp->right)
+                q.push(temp->right);
+                levelElements.push_back(temp);
+            }
+            if(level%2!=0)
+            {
+                int i=0;
+                int j=levelElements.size()-1;
+                while(i<=j)
+                {
+                    swap(levelElements[i]->val,levelElements[j]->val);
+                    i++;
+                    j--;
+                }
+            }
+            level++;
         }
-
-        // Recursively process left and right children of the nodes at the next level
-        // Going to the next deeper level (level + 1)
-        helper(left->left, right->right, level + 1); // Left child of the left subtree and right child of the right subtree
-        helper(left->right, right->left, level + 1); // Right child of the left subtree and left child of the right subtree
-    }
-
-    // Main function to reverse the odd levels of the binary tree
-    TreeNode* reverseOddLevels(TreeNode* root)
-    {
-        // Start the recursive function from the left and right children of the root with level 0
-        helper(root->left, root->right, 1);
-        
-        // Return the root after the values at odd levels have been swapped
         return root;
     }
 };
-
