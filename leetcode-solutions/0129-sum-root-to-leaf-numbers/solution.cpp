@@ -22,8 +22,8 @@ public:
         if (!root->left && !root->right) {
             ans.push_back(path);
         } else {
-            // Continue to explore left and right children, appending "->" as necessary
-            //path += "->";
+            // Continue to explore left and right children
+            
             dfs(root->left, ans, path);
             dfs(root->right, ans, path);
         }
