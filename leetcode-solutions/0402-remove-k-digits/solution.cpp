@@ -1,47 +1,34 @@
-#include <iostream>
-#include <string>
-#include <stack>
-#include <algorithm>
-
-using namespace std;
-
-class Solution 
-{
+class Solution {
 public:
     string removeKdigits(string num, int k) {
-        stack<char> st;
-        
-        for (char ch : num) {
-            // While there are still digits to remove and the current digit is less than the top of the stack
-            while (!st.empty() && k > 0 && st.top() > ch) {
-                st.pop();
+        int n = num.length();
+        string ans = "";
+        stack<char>st;
+        for(int i =0;i<n;i++)
+        {
+            while(!st.empty() && k>0 && st.top()>num[i])
+            {
                 k--;
+                st.pop();
+                ans.pop_back();
             }
-            st.push(ch);
+            st.push(num[i]);
+            ans+=num[i];
         }
-        
-        // If we still have digits to remove, remove them from the top
-        while (k > 0 && !st.empty()) {
+        while(k>0 && !st.empty())
+        {
             st.pop();
+            ans.pop_back();
             k--;
         }
-
-        // Build the result from the stack
-        string res;
-        while (!st.empty()) {
-            res += st.top();
-            st.pop();
+        
+        while(ans.length()>1 && ans[0]=='0')
+        {
+            ans.erase(ans.begin());
         }
 
-        // Reverse the result to get the correct order
-        reverse(res.begin(), res.end());
-
-        // Remove leading zeros
-        while (res.size() > 1 && res[0] == '0') {
-            res.erase(res.begin());
-        }
-
-        return res.empty() ? "0" : res; // Return "0" if result is empty
+        return ans.length()==0?"0":ans;
     }
+    
+    
 };
-
