@@ -18,8 +18,23 @@ public:
     int lastStoneWeightII(vector<int>& stones) {
         int n = stones.size();
         int weights = accumulate(stones.begin(),stones.end(),0);
-        vector<vector<int>>dp(n+1,vector<int>(weights/2 + 1, -1));
-        int best =  solve(stones,0,0,weights,dp);
-        return weights - 2*best;
+        // vector<vector<int>>dp(n+1,vector<int>(weights/2 + 1, -1));
+        // int best =  solve(stones,0,0,weights,dp);
+        int target = weights/2;
+        vector<vector<int>> dp(n + 1, vector<int>(target + 1, 0));
+
+        // Bottom-up tabulation
+        for (int i = 1; i <= n; ++i) {
+            int stone = stones[i - 1];
+            for (int j = 0; j <= target; ++j) {
+                int notPick = dp[i - 1][j];
+                int pick = (j >= stone) ? stone + dp[i - 1][j - stone] : 0;
+                dp[i][j] = max(pick, notPick);
+            }
+        }
+
+        int closestSum = dp[n][target];
+        return weights - 2 * closestSum;
+        
     }
 };
