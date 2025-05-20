@@ -6,7 +6,7 @@ public:
 
         for (const auto& query : queries) {
             int l = query[0], r = query[1];
-            diff[l] +=1;
+            diff[l] += 1;
             if (r + 1 < n) {
                 diff[r + 1] -= 1;
             }
