@@ -13,7 +13,7 @@ public:
             if(nums[i]==max_value)
             {
                 temp_len++;
-                len=max(len,temp_len);
+                len=max(len  ,temp_len);
             }
             else
             {
