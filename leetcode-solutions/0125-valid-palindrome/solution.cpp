@@ -1,47 +1,29 @@
 class Solution {
-    bool valid(char ch) {
-        if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') ||
-            (ch >= '0' && ch <= '9')) {
-            return 1;
-        }
-
-        else
-            return 0;
-    }
-    char toLowerCase(char ch) {
-        if ((ch >= 'a' && ch <= 'z') || (ch >= '0' && ch <= '9'))
-            return ch;
-        else {
-            char temp = ch - 'A' + 'a';
-            return temp;
-        }
-    }
-    bool checkPalindrome(string a) {
-        int s = 0;
-        int e = a.length()-1;
-        while (s <= e) {
-            if (a[s] != a[e]) {
-                return 0;
-            } else {
-                s++;
-                e--;
-            }
-        }
-        return 1;
-    }
-
 public:
     bool isPalindrome(string s) {
-
-        string temp = "";
-        for (int j = 0; j < s.length(); j++) {
-            if (valid(s[j])) {
-                temp.push_back(s[j]);
+        int n = s.length();
+        int i  = 0;
+        int j = n-1;
+        transform(s.begin(), s.end(), s.begin(), ::tolower);
+        while(i<j)
+        {
+            if(isalnum(s[i])&&isalnum(s[j]))
+            {
+                if(s[i]==s[j])
+                {
+                    i++;
+                    j--;
+                }
+                else
+                return false;
             }
+            else if(!isalnum(s[i]))
+            i++;
+            else if(!isalnum(s[j]))
+            j--;
+            else
+            return false;
         }
-        for (int j = 0; j < temp.length(); j++) {
-            temp[j] = toLowerCase(temp[j]);
-        }
-        return checkPalindrome(temp);
+        return true;
     }
 };
