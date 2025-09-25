@@ -27,46 +27,24 @@ public:
 
         // Method - 2 Tabulation
 
-        // vector<vector<int>>dp;
-        // dp = triangle;
-        // for (auto& row : dp) {
-        //     fill(row.begin(), row.end(), 0);
-        // }
-        // for (int j = 0; j < row; j++) {
-        //     dp[row - 1][j] = triangle[row - 1][j];
-        // }
-
-        // for(int i = row-2;i>=0;i--)
-        // {
-        //     for(int j = 0;j<=i;j++)
-        //     {
-        //         int down = triangle[i][j] + dp[i+1][j];
-        //         int diagonal = triangle[i][j] + dp[i+1][j+1];
-        //         dp[i][j] = min(down,diagonal);
-        //     }
-        // }
-        // return dp[0][0];
-
-        // Method - 3 Space Optimisation
-
-        vector<int>prev(row);
-        for(int j = 0;j<row;j++)
-        {
-            prev[j] = triangle[row-1][j];
+        vector<vector<int>>dp;
+        dp = triangle;
+        for (auto& row : dp) {
+            fill(row.begin(), row.end(), -1);
+        }
+        for (int j = 0; j < row; j++) {
+            dp[row - 1][j] = triangle[row - 1][j];
         }
 
         for(int i = row-2;i>=0;i--)
         {
-            vector<int>curr(i+1);
             for(int j = 0;j<=i;j++)
             {
-                int down = triangle[i][j] + prev[j];
-                int diagonal = triangle[i][j] + prev[j+1];
-
-                curr[j] = min(down,diagonal);
+                int down = triangle[i][j] + dp[i+1][j];
+                int diagonal = triangle[i][j] + dp[i+1][j+1];
+                dp[i][j] = min(down,diagonal);
             }
-            prev = curr;
         }
-        return prev[0];
+        return dp[0][0];
     }
 };
