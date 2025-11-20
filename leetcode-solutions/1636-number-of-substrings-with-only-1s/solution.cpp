@@ -1,6 +1,6 @@
 class Solution {
 public:
-    static const int mod = 1e9 + 7;
+    const int mod = 1e9 + 7;
 
     int numSub(string s) {
         long long ans = 0;
