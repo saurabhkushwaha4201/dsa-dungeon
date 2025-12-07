@@ -2,7 +2,7 @@
 
 Welcome to **dsa-dungeon** — the realm where I battle daily DSA monsters and level up my problem-solving skills.
 
-This repository contains all my **LeetCode solutions**, synced automatically using the **LeetSync extension**.  
+This repository contains all my **LeetCode solutions**, automatically committed using a custom **GitHub Actions workflow**.  
 Every file here represents a quest completed: some easy goblins, some medium trolls, and the occasional hard-level dragon. 🐉
 
 ---
@@ -11,7 +11,7 @@ Every file here represents a quest completed: some easy goblins, some medium tro
 
 - 🧩 **Daily puzzles & algorithmic challenges**
 - 🔥 **Greedy goblins** (Greedy Algorithms)
-- 🌀 **Recursion traps**  
+- 🌀 **Recursion traps**
 - 🧙 **Dynamic Programming demons**
 - 🛡️ **Graph labyrinths**
 - 🧠 **Tree spirits & Binary Search beasts**
@@ -29,8 +29,8 @@ Every solved problem is XP gained on the path to becoming a **DSA hero**.
 
 ## 🚀 How It Works
 
-1. Solve problems on **LeetCode**
-2. **LeetSync** automatically commits the solutions here
+1. I solve problems on **LeetCode**
+2. My custom **GitHub Actions workflow** automatically commits new solutions
 3. I gather XP and march forward to the next quest
 
 ---
@@ -43,4 +43,3 @@ To slay every algorithmic beast, conquer every dungeon, and master the art of cl
 
 ### ⚔️ Enter at your own risk.  
 **The dungeon hungers.**
-
