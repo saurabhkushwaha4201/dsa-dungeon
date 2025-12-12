@@ -1,75 +1,51 @@
+#include <bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace std;
+using namespace __gnu_pbds;
+
 class Solution {
 public:
-    multiset<long long>mst;
-    multiset<long long>::iterator mid;
-    void insert_val(int x) {
-        if (mst.empty()) {
-            mst.insert(x);
-            mid = mst.begin();
-            return;
-        }
 
-        mst.insert(x);
+    typedef tree<
+        pair<long long,int>,
+        null_type,
+        less<pair<long long,int>>,
+        rb_tree_tag,
+        tree_order_statistics_node_update
+    > ordered_multiset;
 
-        if (x < *mid) {
-            if (mst.size() % 2 == 0)
-                mid--;
-        } 
-        else {
-            if (mst.size() % 2 == 1)
-                mid++;
-        }
-    }
-
-    void remove_val(int x) {
-        auto it = mst.find(x);
-        if (it == mst.end()) return;
-
-        bool leftSide = (x <= *mid);
-
-        // Case 1: removing the median itself
-        if (it == mid) {
-            auto old = mid;
-
-            if (mst.size() == 1) {
-                mst.erase(old);
-                return;
-            }
-
-            // Move mid before erase
-            if (mst.size() % 2 == 0) mid++;   // even -> will become odd -> move right
-            else mid--;                       // odd  -> will become even -> move left
-
-            mst.erase(old);
-            return;
-        }
-
-        // Case 2: element is on left side
-        if (leftSide) {
-            if (mst.size() % 2 == 0) mid++;   // after erase, size becomes odd
-        }
-        else {
-            if (mst.size() % 2 == 1) mid--;   // after erase, size becomes even
-        }
-
-        mst.erase(it);
-    }
     vector<double> medianSlidingWindow(vector<int>& nums, int k) {
-        vector<double>result;
+
         int n = nums.size();
-        for(int i = 0;i<n;i++){
-            insert_val(nums[i]);
-            if(i>=k-1){
-                if(k%2==1){
-                    result.push_back(*mid/1.0);
-                }else{
-                    auto mid2 = next(mid);
-                    double avg = (*mid + *mid2)/2.0;
-                    result.push_back(avg);
+        ordered_multiset os;
+        vector<double> result;
+
+        for (int i = 0; i < n; i++) {
+            // Insert current element with index for uniqueness
+            os.insert({nums[i], i});
+
+            if (i >= k - 1) {
+
+                int m = k / 2;
+
+                if (k % 2 == 1) {
+                    // odd window → one middle element
+                    double med = os.find_by_order(m)->first;
+                    result.push_back(med);
+                } else {
+                    // even window → average of two middle elements
+                    double a = os.find_by_order(m - 1)->first;
+                    double b = os.find_by_order(m)->first;
+                    result.push_back((a + b) / 2.0);
                 }
-                remove_val(nums[i-k+1]);
+
+                // Remove the outgoing element
+                os.erase({nums[i - (k - 1)], i - (k - 1)});
             }
         }
+
         return result;
     }
 };
+
